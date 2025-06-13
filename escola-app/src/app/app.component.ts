@@ -9,16 +9,16 @@ import { Disciplina } from './disciplina.model';
   selector: 'app-root',
   imports: [RouterOutlet, ListaDeDisciplinas, CommonModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  selecionado = null;
+  selecionado: Disciplina | null = null;
   disciplinas = [
     new Disciplina('Língua Portuguesa', 'O objetivo é...'),
     new Disciplina('Educação Física', 'O objetivo é...')
   ]
 
-  selecionar(disciplina: null) {
+  selecionar(disciplina: Disciplina) {
     this.selecionado = disciplina;
   }
 }
