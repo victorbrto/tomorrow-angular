@@ -19,9 +19,13 @@ export class AppComponent {
   editando: Disciplina | null = null;
 
   disciplinas = [
-    new Disciplina('Língua Portuguesa', 'O objetivo é...'),
-    new Disciplina('Educação Física', 'O objetivo é...')
+    new Disciplina(1, 'Língua Portuguesa', 'O objetivo é...'),
+    new Disciplina(1, 'Educação Física', 'O objetivo é...')
   ]
+
+  constructor() {
+    this.disciplinas
+  }
 
 
   selecionar(disciplina: Disciplina) {
@@ -33,7 +37,7 @@ export class AppComponent {
       this.editando.nome = this.nome;
       this.editando.descricao = this.descricao;
     } else {
-      const d = new Disciplina(this.nome, this.descricao);
+      const d = new Disciplina(this.id, this.nome, this.descricao);
       this.disciplinas.push(d);
     }
     this.nome = " ";

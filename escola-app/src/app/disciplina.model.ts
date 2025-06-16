@@ -1,8 +1,10 @@
 export class Disciplina {
-    nome: string;
-    descricao: string;
+    id: number;
+    nome: string | null;
+    descricao: string | null;
 
-    constructor(nome: string, descricao: string) {
+    constructor(id: number, nome: string | null, descricao: string | null) {
+        this.id = id;
         this.nome = nome;
         this.descricao = descricao
     }
