@@ -1,65 +1,50 @@
 import { Injectable } from '@angular/core';
 import { Disciplina } from './disciplina.model';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DisciplinasService {
-  private disciplinas: Array<Disciplina> | null = null
-  private id: number = 2
+  private disciplinas: Disciplina[] = []
+  API_URL = "http://localhost:3000";
 
-  constructor() {
-    this.disciplinas = [new Disciplina(1, "Língua Portuguesa", "Essa matéria fala português")]
+  constructor(private http: HttpClient, private disciplinasService: DisciplinasService) {
   }
 
-  todas(): Array<Disciplina> | null {
-    return this.disciplinas;
+  todas() {
+    return this.http.get<Disciplina>(this.API_URL + "/disciplinas")
   }
 
-  salvar(id: number, nome: string | null, descricao: string | null): Disciplina {
+  salvar(id: number | null, nome: string, descricao?: string) {
+    let editDisciplina = { id: id, nome: nome, descricao: descricao }
     if (id) {
-      let editDisciplina = this.encontrar(id);
       if (editDisciplina) {
         editDisciplina.nome = nome;
         editDisciplina.descricao = descricao;
-      } else {
-        console.log("Disciplina não encontrada");
+        return this.http.patch(this.API_URL + "/disciplinas" + id, editDisciplina);
       }
-      return editDisciplina;
-
-    } else {
-      const createDisciplina = new Disciplina(this.id, nome, descricao);
-      this.disciplinas?.push(createDisciplina);
-      this.id++;
-      return createDisciplina;
     }
+    editDisciplina.id = this.gerarProximoId();
+    return this.http.post(this.API_URL + "/disciplinas" + editDisciplina, { observe: 'body' })
   }
 
-  excluir(disciplina: number | Disciplina) {
-    let isDisciplinaID = null
-    if (typeof (disciplina) === "number") {
-      isDisciplinaID = this.encontrar(disciplina)
-    } else {
-      isDisciplinaID = this.encontrar(disciplina.id)
-    }
-    if (isDisciplinaID) {
-      const disciplinaID = this.disciplinas?.indexOf(isDisciplinaID)
-      this.disciplinas?.slice(disciplinaID, 1)
-    } else {
-      console.log("Não foi possível encontrar a disciplina")
-    }
+  excluir(id: number): void {
+    this.http.delete<void>(`${this.API_URL + "/disciplinas"}/${id}`)
   }
 
   encontrar(params: number | string) {
-    let isDisciplinaID = null
-    if (typeof (params) === "number") {
-      isDisciplinaID = this.disciplinas?.filter(isDisciplinaID => isDisciplinaID.id === params)
-    } else {
-      isDisciplinaID = this.disciplinas?.filter(isDisciplinaID => isDisciplinaID.nome === params)
-    } if (isDisciplinaID != null && isDisciplinaID.length > 0) {
-      return isDisciplinaID[0]
-    } else {
-      return null;
-    }
+    this.http.get(this.API_URL + "/disciplinas" + params)
+  }
+
+  cancelar(): void {
+    this.disciplinas = [];
+  }
+
+  private gerarProximoId() {
+    if (this.disciplinas.length === 0) return 1;
+
+    const maiorId = Math.max(...this.disciplinas.map(d => d.id))
+    return maiorId + 1;
   }
 }

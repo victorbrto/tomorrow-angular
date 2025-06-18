@@ -4,8 +4,8 @@
   <ul>
     <li *ngFor="let disciplina of disciplinas" (click)="selecionar(disciplina)">
       <p class="titulo" [class.selecionado]="selecionado == disciplina">{{disciplina.nome}}</p>
-      <button (click)="excluir(disciplina)">Excluir</button>
-      <button (click)="editar(disciplina)">Editar</button>
+      <!--<button (click)="excluir(disciplina)">Excluir</button>
+      <button (click)="editar(disciplina)">Editar</button>-->
       <p class="descricao" *ngIf="selecionado == disciplina">{{disciplina.descricao}}</p>
     </li>
   </ul>
@@ -24,7 +24,7 @@
     <button type="submit" class="btn btn-primary" [disabled]="!cadastro.valid">
       Salvar
     </button>
-    <button type="reset" (click)="cancelar()">Cancelar</button>
+    <!-- <button type="reset" (click)="cancelar()">Cancelar</button> -->
   </form>
   <app-lista-de-disciplinas />
 </main>

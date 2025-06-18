@@ -11,7 +11,7 @@ import { Disciplina } from '../disciplina.model';
 
 export class ListaDeDisciplinas {
   @Input()
-  disciplinas = [new Disciplina(" ", " ")];
+  disciplinas = [new Disciplina(0, " ", " ")];
 
   @Input()
   editando: Disciplina | null = null;
