@@ -1,32 +1,5 @@
 <main class="main">
-  <h1>Disciplinas</h1>
-  <hr>
-  <ul>
-    <li *ngFor="let disciplina of disciplinas" (click)="selecionar(disciplina)">
-      <p class="titulo" [class.selecionado]="selecionado == disciplina">{{disciplina.nome}}</p>
-      <!--<button (click)="excluir(disciplina)">Excluir</button>
-      <button (click)="editar(disciplina)">Editar</button>-->
-      <p class="descricao" *ngIf="selecionado == disciplina">{{disciplina.descricao}}</p>
-    </li>
-  </ul>
-  <hr>
-  <h2>Cadastrar</h2>
-  <p>Use este formulário para cadastrar ou editar uma disciplina.</p>
-  <form #cadastro="ngForm" (submit)="salvar()">
-    <div>
-      <label for="nome">Nome</label><br>
-      <input type="text" id="nome" name="nome" [(ngModel)]="nome" required>
-    </div>
-    <div>
-      <label for="descricao">Descrição</label><br>
-      <textarea id="descricao" name="descricao" [(ngModel)]="descricao" cols="70" rows="5" required></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary" [disabled]="!cadastro.valid">
-      Salvar
-    </button>
-    <!-- <button type="reset" (click)="cancelar()">Cancelar</button> -->
-  </form>
-  <app-lista-de-disciplinas />
+
 </main>
 
-<router-outlet></router-outlet>
+<router-outlet />

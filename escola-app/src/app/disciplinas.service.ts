@@ -3,13 +3,13 @@ import { Disciplina } from './disciplina.model';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DisciplinasService {
   private disciplinas: Disciplina[] = []
   API_URL = "http://localhost:3000";
 
-  constructor(private http: HttpClient, private disciplinasService: DisciplinasService) {
+  constructor(private http: HttpClient) {
   }
 
   todas() {
@@ -19,11 +19,9 @@ export class DisciplinasService {
   salvar(id: number | null, nome: string, descricao?: string) {
     let editDisciplina = { id: id, nome: nome, descricao: descricao }
     if (id) {
-      if (editDisciplina) {
-        editDisciplina.nome = nome;
-        editDisciplina.descricao = descricao;
-        return this.http.patch(this.API_URL + "/disciplinas" + id, editDisciplina);
-      }
+      editDisciplina.nome = nome;
+      editDisciplina.descricao = descricao;
+      return this.http.patch(this.API_URL + "/disciplinas" + id, editDisciplina);
     }
     editDisciplina.id = this.gerarProximoId();
     return this.http.post(this.API_URL + "/disciplinas" + editDisciplina, { observe: 'body' })
@@ -34,7 +32,7 @@ export class DisciplinasService {
   }
 
   encontrar(params: number | string) {
-    this.http.get(this.API_URL + "/disciplinas" + params)
+    return this.http.get(this.API_URL + "/disciplinas" + params)
   }
 
   cancelar(): void {
