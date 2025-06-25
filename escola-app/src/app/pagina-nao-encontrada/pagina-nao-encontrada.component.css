@@ -1,0 +1,42 @@
+.container {
+    text-align: center;
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+    margin-top: 25vh;
+}
+
+h1 {
+    font-weight: 700;
+    font-style: normal;
+    text-align: center;
+    color: antiquewhite;
+}
+
+p {
+    color: #a1a0a0;
+    font-weight: 400;
+    margin-bottom: 2rem;
+}
+
+button {
+    background-color: rgb(45, 45, 45);
+    font-weight: 500;
+    color: #a1a0a0;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-style: normal;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+    transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+    text-decoration: underline;
+}
+
+button+button {
+    margin-left: 0.5rem;
+}

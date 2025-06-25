@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Disciplina } from './disciplina.model';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,27 +13,28 @@ export class DisciplinasService {
   constructor(private http: HttpClient) {
   }
 
-  todas() {
-    return this.http.get<Disciplina>(this.API_URL + "/disciplinas")
+  todas(): Observable<Disciplina[]> {
+    return this.http.get<Disciplina[]>(`${this.API_URL}/disciplinas`)
   }
 
-  salvar(id: number | null, nome: string, descricao?: string) {
-    let editDisciplina = { id: id, nome: nome, descricao: descricao }
+  salvar(id: number | null, nome: string, descricao?: string): Observable<Disciplina> {
+
     if (id) {
-      editDisciplina.nome = nome;
-      editDisciplina.descricao = descricao;
-      return this.http.patch(this.API_URL + "/disciplinas" + id, editDisciplina);
+      const disciplina = { id, nome, descricao }
+      return this.http.patch<Disciplina>(`${this.API_URL}/disciplinas/${id}`, disciplina);
+    } else {
+      const disciplina = { nome, descricao }
+
+      return this.http.post<Disciplina>(`${this.API_URL}/disciplinas`, disciplina);
     }
-    editDisciplina.id = this.gerarProximoId();
-    return this.http.post(this.API_URL + "/disciplinas" + editDisciplina, { observe: 'body' })
   }
 
-  excluir(id: number): void {
-    this.http.delete<void>(`${this.API_URL + "/disciplinas"}/${id}`)
+  excluir(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.API_URL}/disciplinas/${id}`)
   }
 
-  encontrar(params: number | string) {
-    return this.http.get(this.API_URL + "/disciplinas" + params)
+  encontrar(params: number | string): Observable<Disciplina> {
+    return this.http.get<Disciplina>(`${this.API_URL}/disciplinas/${params}`)
   }
 
   cancelar(): void {

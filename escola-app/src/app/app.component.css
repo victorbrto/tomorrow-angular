@@ -14,3 +14,7 @@ p.titulo:hover {
 p.descricao {
     font-size: 10pt;
 }
+
+body {
+    background-color: black;
+}
